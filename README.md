@@ -2,6 +2,33 @@
 
 We are building an open source, digital currency-based web platform that will help people evaluate the credibility of all online content (making people better informed about the world around them and also help them make better decisions regarding health, finance, science, nutrition and so on), promote civil discourse online and reduce polarization in society, improve how scientific and medical publication is done, and allow content creators make money by creating high quality content. This platform promises to eliminate ads, trolls, and clickbait. See how the platform works here: https://youtu.be/fWbqsDp1OoI
 
+## Current Development Progress
+**[STAGE 0] [Prototype]** Develop an interface where the user can create a personal Username & Profile on the Platform (at this stage the profile can be very basic)
+
+**[STAGE 1] [Prototype]** Based on User input/request, the system will extract all the text from an external webpage and store the text data on the New Internet Platform database.
+
+- **[1.a]** The text should have a timestamp with the date/time it was extracted.
+
+- **[1.b]** The extracted text should have associated with it the original webpage URL.
+
+- **[1.c]** The extracted text should have associated with it the Username who made the request.
+
+- **[1.d]** The system should extract the name of the author who wrote the article (since this may be more difficult to achieve, initially the system can prompt the User to input that data field).
+
+**[STAGE 2] [Prototype]** User/Author Profile:
+
+- **[2.a]** Each User on the Platform should have a Credibility Score and Performance Score associated with his or her profile. The score will be based on the scores the User received on his or her posts and comments. Refer to Platform Illustration pdf (Post 2.pdf) for UI concept.
+
+- **[2.b]** CS and PS should have 'Total' scores as well as general topic scores (such as 'Tech', 'Health' or 'Politics'), as per Illustration.
+
+**[STAGE 3] [Prototype]** Allow Users to rate the relative values of various topics on the Platform (this stage is essential for the Performance Score to work properly). UI illustration to follow.
+
+**[STAGE 4] [Prototype]** Allow Users to rate the Credibility, Performance and Influence Scores of external webpages/posts using by commenting on the post. UI illustration to follow
+
+
+<img src="https://github.com/MikeNatanzon/NewInternetPlatform/blob/master/images/UserInterface.PNG">
+User Interface Illustration for a Post
+
 # Principles
 
 Before I dive into the specifics of the Credibility Score (CS) and Performance Score (PS) algorithms as I see them, I’d like to make the point that I don’t claim to have the ultimate answer as to what the “best” Credibility algorithm should be. The algorithm will likely evolve and go through multiple iterations to achieve the desired outcome (and you will all be able to advance your own changes and improvements to the algorithm).
@@ -44,6 +71,8 @@ This equation is more accurately given by the algorithm:
  { Sum ([claim] x [weight of claim] x [% accuracy]) } / { Sum ([claim] x [weight of claim]) } = [Credibility Score]
                 
 With the help of the Performance Score, an 8.0 “credibility score” (which doesn’t reflect much in reality) is reduced to a -9.65 Credibility Score (which gives a more accurate representation of the person’s track record).
+
+<img src="https://github.com/MikeNatanzon/NewInternetPlatform/blob/master/images/CredVsImportance.PNG" width=500>
 
 Consider the graph above – what we want is for the Credibility Score to give high rating to someone who posts content of high credibility and high importance, and punish someone who posts fraudulent or misleading information about high importance subjects. Similarly, we want the reward/punishment to be proportional both to the importance of the subject matter and to the level of accuracy of the post. 
 
