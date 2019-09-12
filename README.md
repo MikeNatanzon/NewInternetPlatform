@@ -65,15 +65,19 @@ User 2 (W10,000) values Health at 10%, Technology at 20%, Politics at 2% and all
 User 3 (W1,000) values Health at 5%, Technology at 75%, Politics at 5% and all other at 15%
 
 (Of course I’m simplifying here by assuming these are the only users on the Platform, and that Health, Technology, and Politics are the main topics. In reality we can have countless users and countless topics, but the process will work just the same)
-The relative importance of Health would be:
 
+The relative importance of Health would be:
 (0.30 x 50,000 + 0.10 x 10,000 + 0.05 x 1,000) / (50,000 + 10,000 + 1,000) = 26.31%
+
 The relative importance of Technology would be:
 (0.20 x 50,000 + 0.20 x 10,000 + 0.75 x 1,000) / (50,000 + 10,000 + 1,000) = 20.90%
+
 The relative importance of Politics would be:
 (0.15 x 50,000 + 0.02 x 10,000 + 0.05 x 1,000) / (50,000 + 10,000 + 1,000) = 12.70%
+
 The relative importance of all other topics would be:
 (0.35 x 50,000 + 0.68 x 10,000 + 0.15 x 1,000) / (50,000 + 10,000 + 1,000) = 40.08%
+
 The algorithm here is:
 
  { Sum ([% value of Topic by User] x [CS x PS of User]) }  / Sum ([CS x PS of User]) = [Overall value of Topic]
@@ -147,12 +151,19 @@ One of the most innovative (yet somewhat counterintuitive) aspects of the New In
 Since the Platform promotes the free flow of information, it is essential that people are rewarded according to their contribution, as well as given credit when others use and/or modify their work. For that reason, the Platform has an Influence Distribution rating, designed to distribute the CS x PS points for each post according to the sources that contributed to its creation.
 
 For example, suppose a user writes a post that is mostly based on the ideas of other authors. In that case the Influence Distribution for the post may look something like this: 
+
 •	Post (self): 15%
+
 •	Source A: 35%
+
 •	Source B: 5%
+
 •	Source C: 2%
+
 •	Source D: 12%
+
 •	Source E: 21%
+
 •	Source F: 10%
 
 Thus, if for instance the CS x PS for the post is 2,000, the post itself will only get 300 points (2,000 x 0.15), while the rest of the Sources will be rewarded according to their contribution to the post.
