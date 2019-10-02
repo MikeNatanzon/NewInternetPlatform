@@ -3,9 +3,43 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
 </head>
 <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <div class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Login</div>
+                        <div class="card-body">
+                            <form action="" method="">
+                                    <div class="row form-group">
+                                        <label for="loginInputEmail1">Email address</label>
+                                        <input type="email" class="form-control" id="loginInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="loginInputPassword">Password</label>
+                                        <input type="password" class="form-control" id="loginInputPassword" placeholder="Password">
+                                    </div>
+                                    <div class="row form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="loginSaveCheck">
+                                        <label class="form-check-label" for="loginSaveCheck">Remember me</label>
+                                    </div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <a href="#" class="btn btn-link">Forgot your password?</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
