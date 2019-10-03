@@ -29,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use('/stylesheets/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free/'));
 
 //Configure Mongoose
 mongoose.connect('mongodb://localhost/passport-tutorial', { useUnifiedTopology: true, useNewUrlParser: true }).then(() => {
