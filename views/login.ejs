@@ -17,17 +17,17 @@
                     <div class="card">
                         <div class="card-header">Login</div>
                         <div class="card-body">
-                            <form action="" method="">
+                            <form action="/api/users/login" method="POST" id="user" name="user">
                                 <div class="row form-group">
                                     <div class="col">
-                                        <label for="loginInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" id="loginInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                        <label for="email">Email address</label>
+                                        <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col">
-                                        <label for="loginInputPassword">Password</label>
-                                        <input type="password" class="form-control" id="loginInputPassword" placeholder="Password">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                                     </div>
                                 </div>
                                 <div class="row form-group form-check">

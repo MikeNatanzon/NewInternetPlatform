@@ -42,7 +42,22 @@ router.post('/', auth.optional, (req, res, next) => {
 
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
-    const { body: { user } } = req;
+    let { body: { user } } = req;
+
+    if(!user) {
+        if (req.body && req.body.email && req.body.password) {
+            user = {
+                email: req.body.email ,
+                password: req.body.password
+            };
+        } else {
+            return res.status(422).json({
+                errors: {
+                    user: 'data are required',
+                },
+            });
+        }
+    }
 
     if(!user.email) {
         return res.status(422).json({
