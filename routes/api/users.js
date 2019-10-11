@@ -91,6 +91,58 @@ router.post('/login', auth.optional, (req, res, next) => {
     })(req, res, next);
 });
 
+//POST login route (optional, everyone has access)
+router.post('/signup', auth.optional, (req, res, next) => {
+    let { body: { user } } = req;
+
+    user = {
+                email: req.body.email ,
+                password: req.body.password ,
+                password_retype: req.body.password_retype 
+            };
+
+    if(!user.email) {
+        return res.status(422).json({
+            errors: {
+                email: 'is required',
+            },
+        });
+    }
+
+    if(!user.password) {
+        return res.status(422).json({
+            errors: {
+                password: 'is required',
+            },
+        });
+    }    
+
+
+    if(!user.password_retype) {
+        return res.status(422).json({
+            errors: {
+                password_retype: 'is required',
+            },
+        });
+    }    
+
+    if(user.password_retype!==user.password) {
+        return res.status(422).json({
+            errors: {
+                user: 'passwords mismatch',
+            },
+        });
+    } 
+
+    //TODO - save to passport
+
+    return res.status(200).json({
+            status: 'Congrats, you are now an esteemed NewInternet member.',
+    });
+
+});
+
+
 //GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
     const { payload: { id } } = req;
