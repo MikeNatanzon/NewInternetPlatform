@@ -50,6 +50,7 @@ router.post('/login', auth.optional, (req, res, next) => {
                 email: req.body.email ,
                 password: req.body.password
             };
+            req.body = {user: user};
         } else {
             return res.status(422).json({
                 errors: {
