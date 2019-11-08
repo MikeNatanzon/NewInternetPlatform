@@ -44,21 +44,8 @@ require('./models/Users');
 require('./config/passport');
 app.use(require('./routes'));
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(errorHandler(404));
-});
-
-app.use((err, req, res) => {
-  res.status(err.status || 500);
-
-  res.json({
-    errors: {
-      message: err.message,
-      error: {},
-    },
-  });
-
+app.use((req, res, next) => {
+  next(errorHandler(404, 'Page not found'));
 });
 
 app.listen(8000, () => console.log('Server running on http://localhost:8000/'));

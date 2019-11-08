@@ -3,6 +3,7 @@ const passport = require('passport');
 const router = require('express').Router();
 const auth = require('../auth');
 const Users = mongoose.model('Users');
+const errorHandler = require('http-errors');
 
 //POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
@@ -88,7 +89,7 @@ router.post('/login', auth.optional, (req, res, next) => {
             return res.json({ user: user.toAuthJSON() });
         }
 
-        return status(400).info;
+        return next(errorHandler(401, 'Invalid credendials'));
     })(req, res, next);
 });
 
