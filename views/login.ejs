@@ -2,9 +2,10 @@
 <html>
 <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
     <link rel="stylesheet" href="/bootstrap/bootstrap.min.css"/>
     <link rel="stylesheet" href="/stylesheets/fontawesome/css/all.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel="stylesheet" href="/stylesheets/login.css">
 </head>
 <body>
     <h1><%= title %></h1>
@@ -28,6 +29,8 @@
                                     <div class="col">
                                         <label for="password">Password</label>
                                         <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                                        <i class="fa fa-eye hide-element" id="login-psw-eye"></i>
+                                        <i class="fas fa-eye-slash" id="login-psw-eye-slash"></i>
                                     </div>
                                 </div>
                                 <div class="row form-group form-check">
@@ -49,5 +52,6 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="/javascripts/login.js"></script>
 </body>
 </html>
