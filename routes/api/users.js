@@ -136,11 +136,36 @@ router.post('/signup', auth.optional, (req, res, next) => {
         });
     } 
 
-    //TODO - save to passport
+    //TODO - save to database
+   // console.log("*** " + user.email);
+    //console.log("*** " + user.password);
+      
+    
+    var mongoUtil = require('../../config/mongoUtil');
+    var db = mongoUtil.getDb();
 
-    return res.status(200).json({
+   //db.collection('Users').find();
+
+
+    
+ 
+ 
+    // a document instance
+    var doc = new Users({ email: user.email, hash: user.password, salt: user.password});
+ 
+    // save model to database
+    doc.save(function (err, doc) {
+
+      if (err) return console.error(err);
+
+        console.log(doc.email + " saved to users collection.");
+
+        return res.status(200).json({
             status: 'Congrats, you are now an esteemed NewInternet member.',
+        });
+
     });
+    
 
 });
 

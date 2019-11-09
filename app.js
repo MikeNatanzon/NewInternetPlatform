@@ -32,12 +32,12 @@ app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/c
 app.use('/stylesheets/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free/'));
 
 //Configure Mongoose
-mongoose.connect('mongodb://localhost/passport-tutorial', { useUnifiedTopology: true, useNewUrlParser: true }).then(() => {
-  console.log("Connected to Database");
-}).catch((err) => {
-  console.log("Not Connected to Database ERROR! ", err);
-});
-mongoose.set('debug', true);
+var mongoUtil = require('./config/mongoUtil');
+
+mongoUtil.connectToServer( function( err, client ) {
+  if (err) console.log(err);
+  // start the rest of your app here
+} );
 
 //Models and routes
 require('./models/Users');
