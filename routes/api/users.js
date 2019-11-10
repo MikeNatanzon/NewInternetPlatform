@@ -105,67 +105,115 @@ router.post('/signup', auth.optional, (req, res, next) => {
 
     if(!user.email) {
         return res.status(422).json({
-            errors: {
-                email: 'is required',
-            },
+            errors: 'Email is required'
         });
     }
 
     if(!user.password) {
         return res.status(422).json({
-            errors: {
-                password: 'is required',
-            },
+            errors: 'Password is required'
         });
     }    
 
 
     if(!user.password_retype) {
         return res.status(422).json({
-            errors: {
-                password_retype: 'is required',
-            },
-        });
+            errors: 'Password retype is required'
+       });
     }    
 
     if(user.password_retype!==user.password) {
         return res.status(422).json({
-            errors: {
-                user: 'passwords mismatch',
-            },
+            errors: 'Passwords do not match'
         });
     } 
 
-    //TODO - save to database
-   // console.log("*** " + user.email);
-    //console.log("*** " + user.password);
-      
+    let strengthValue = {
+      'caps': false,
+      'length': false,
+      'special': false,
+      'numbers': false,
+      'small': false
+    };
+
+    if(user.password.length >= 8) {
+        strengthValue.length = true;
+    }
+
+    for(let index=0; index < user.password.length; index++) {
+          let char = user.password.charCodeAt(index);
+
+          if(!strengthValue.caps && char >= 65 && char <= 90) {
+              strengthValue.caps = true;
+          } else if(!strengthValue.numbers && char >=48 && char <= 57){
+            strengthValue.numbers = true;
+          } else if(!strengthValue.small && char >=97 && char <= 122){
+            strengthValue.small = true;
+          } else if(!strengthValue.numbers && char >=48 && char <= 57){
+            strengthValue.numbers = true;
+          } else if(!strengthValue.special && (char >=33 && char <= 47) || (char >=58 && char <= 64)) {
+            strengthValue.special = true;
+          }
+    }
     
+    if (!(strengthValue.caps && strengthValue.length && strengthValue.special && strengthValue.numbers && strengthValue.small))
+    {
+        return res.status(422).json({
+            errors: 'Password should contain at least 8 alpha-numeric characters with at least one uppercase, one number, and one special character'
+        });
+    }
+
+
     var mongoUtil = require('../../config/mongoUtil');
     var db = mongoUtil.getDb();
 
    //db.collection('Users').find();
 
+    //console.log("*** " + user.email);
 
-    
- 
- 
-    // a document instance
-    var doc = new Users({ email: user.email, hash: user.password, salt: user.password});
- 
-    // save model to database
-    doc.save(function (err, doc) {
+   Users.findOne({ email: user.email }) 
+    .then((doc) => {
+       if (doc) {
+           // console.log("MVMVMV ~~~~~~~~~~~~~ user already exists");
 
-      if (err) return console.error(err);
 
-        console.log(doc.email + " saved to users collection.");
+            return res.status(422).json({
+               errors: 'User already exists'
+            });
 
-        return res.status(200).json({
-            status: 'Congrats, you are now an esteemed NewInternet member.',
-        });
+       } else {
+            // console.log("MVMVMV ~~~~~~~~~~~~~ no data exist for this id");
 
+
+            var doc = new Users({ email: user.email, hash: user.password, salt: user.password});
+            doc.setPassword(user.password);
+
+            // save model to database
+            doc.save(function (err, doc) {
+
+            if (err) return console.error(err);
+            //console.log(doc.email + " saved to users collection.");
+
+            return res.status(200).json({
+                status: 'Congrats, you are now an esteemed NewInternet member.',
+            });
+
+            });
+
+
+       }
+    })
+   .catch((err) => {
+     console.log(err);
     });
-    
+
+
+
+
+
+
+
+    // a document instance
 
 });
 
