@@ -1,0 +1,31 @@
+<div class="{{template}}">
+    <body>
+    <h1>{{title}}</h1>
+
+    <form action="/api/users/signup" method="POST" id="user" name="user">
+        <div class="row form-group">
+            <div class="col">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col">
+                <label for="password_retype">Retype Password</label>
+                <input type="password" class="form-control" name="password_retype" id="password_retype" placeholder="Retype Password">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+    </form>
+
+    </body>
+</div>

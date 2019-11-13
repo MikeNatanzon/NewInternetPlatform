@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const errorHandler = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const exphbs = require('express-handlebars');
 
 //Configure mongoose's promise to global promise
 mongoose.promise = global.Promise;
@@ -14,8 +15,9 @@ mongoose.promise = global.Promise;
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'hbs');
+app.engine('.hbs', exphbs({extname: '.hbs'}));
+app.set('view engine', '.hbs');
 
 //Configure our app
 app.use(cors());
@@ -45,7 +47,11 @@ require('./config/passport');
 app.use(require('./routes'));
 
 app.use((req, res, next) => {
-  next(errorHandler(404, 'Page not found'));
+  // next(errorHandler(404, 'Page not found'));
+  res.render('error', {
+    layout: 'default',
+    template: 'error-template'
+  });
 });
 
 app.listen(8000, () => console.log('Server running on http://localhost:8000/'));
