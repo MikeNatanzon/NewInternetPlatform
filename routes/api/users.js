@@ -83,13 +83,24 @@ router.post('/login', auth.optional, (req, res, next) => {
         }
 
         if(passportUser) {
+            console.log('Logged user');
             const user = passportUser;
             user.token = passportUser.generateJWT();
 
-            return res.json({ user: user.toAuthJSON() });
+            return res
+                .status(200)
+                .json({
+                    user: user.toAuthJSON()
+                });
         }
 
-        return next(errorHandler(401, 'Invalid credendials'));
+        console.log('Invalid credentials');
+        return res
+            .status(500)
+            .send({
+                message: 'Invalid credentials'
+            });
+
     })(req, res, next);
 });
 
@@ -100,7 +111,7 @@ router.post('/signup', auth.optional, (req, res, next) => {
     user = {
                 email: req.body.email ,
                 password: req.body.password ,
-                password_retype: req.body.password_retype 
+                password_retype: req.body.password_retype
             };
 
     if(!user.email) {
@@ -113,20 +124,20 @@ router.post('/signup', auth.optional, (req, res, next) => {
         return res.status(422).json({
             errors: 'Password is required'
         });
-    }    
+    }
 
 
     if(!user.password_retype) {
         return res.status(422).json({
             errors: 'Password retype is required'
        });
-    }    
+    }
 
     if(user.password_retype!==user.password) {
         return res.status(422).json({
             errors: 'Passwords do not match'
         });
-    } 
+    }
 
     let strengthValue = {
       'caps': false,
@@ -155,7 +166,7 @@ router.post('/signup', auth.optional, (req, res, next) => {
             strengthValue.special = true;
           }
     }
-    
+
     if (!(strengthValue.caps && strengthValue.length && strengthValue.special && strengthValue.numbers && strengthValue.small))
     {
         return res.status(422).json({
@@ -171,7 +182,7 @@ router.post('/signup', auth.optional, (req, res, next) => {
 
     //console.log("*** " + user.email);
 
-   Users.findOne({ email: user.email }) 
+   Users.findOne({ email: user.email })
     .then((doc) => {
        if (doc) {
            // console.log("MVMVMV ~~~~~~~~~~~~~ user already exists");
