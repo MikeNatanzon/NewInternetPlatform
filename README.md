@@ -1,4 +1,4 @@
-# A NEW INTERNET PLATFORM (FRONT END)
+# A NEW INTERNET PLATFORM
 
 We are building an open source, digital currency-based web platform that will help people evaluate the credibility of all online content (making people better informed about the world around them and also help them make better decisions regarding health, finance, science, nutrition and so on), promote civil discourse online and reduce polarization in society, improve how scientific and medical publication is done, and allow content creators make money by creating high quality content. This platform promises to eliminate ads, trolls, and clickbait. See how the platform works here: https://youtu.be/fWbqsDp1OoI
 
