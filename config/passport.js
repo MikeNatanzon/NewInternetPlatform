@@ -1,19 +1,25 @@
-const mongoose = require('mongoose');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const User = require('../models/user');
+const config = require('../config/database');
 
-const Users = mongoose.model('Users');
+module.exports = function(passport){
+	let opts = {};
+	opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
+	opts.secretOrKey = config.secret;
+	passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
+		console.log(jwt_payload);
+		User.getUserById(jwt_payload.user._id, (err, user) => {
+			if(err){
+				return done(err, false);
+			}
 
-passport.use(new LocalStrategy({
-    usernameField: 'user[email]',
-    passwordField: 'user[password]',
-}, (email, password, done) => {
-    Users.findOne({ email })
-        .then((user) => {
-            if(!user || !user.validatePassword(password)) {
-                return done(null, false, { errors: { 'email or password': 'is invalid' } });
-            }
-
-            return done(null, user);
-        }).catch(done);
-}));
+			if(user)
+			{
+				return done(null, user);
+			}else{
+				return done(null, false);
+			}
+		});
+	}));
+}

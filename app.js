@@ -1,50 +1,45 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const cors = require('cors');
+const passport = require('passport');
 const mongoose = require('mongoose');
-const errorHandler = require('http-errors');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const exphbs = require('express-handlebars');
+const config = require('./config/database');
 
-//Configure mongoose's promise to global promise
-mongoose.promise = global.Promise;
+mongoose.connect(config.database);
+
+mongoose.connection.on('connected', () => {
+	console.log('Connected to database ' + config.database);
+})
+
+mongoose.connection.on('error', (err) => { 
+	console.log('Error connecting to database ' + err);
+})
 
 const app = express();
 
-//Configure our app
+const users = require('./routes/users');
+
+const port = 8000;
+
 app.use(cors());
-app.use(require('morgan')('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static(path.join(__dirname, 'client')));
+
 app.use(bodyParser.json());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
-//Configure Mongoose
-var mongoUtil = require('./config/mongoUtil');
+//Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
-mongoUtil.connectToServer( function( err, client ) {
-  if (err) console.log(err);
-  // start the rest of your app here
-} );
+require('./config/passport')(passport);
 
-//Models and routes
-require('./models/Users');
-require('./config/passport');
-app.use(require('./routes'));
+app.use('/users', users);
 
-app.use((req, res, next) => {
-  return res
-      .status(500)
-      .send({
-        message: 'Page not found'
-      });
+app.get('/', (req,res) => {
+	res.send('Invalid Endpoint');
 });
 
-app.listen(8000, () => console.log('Server running on http://localhost:8000/'));
+app.listen(port, () => {
+	console.log('app listening on port ' + port);
+});
